@@ -1,0 +1,22 @@
+{
+  "name": "bug_tracker",
+  "version": "1.0.0",
+  "description": "keeps track of reported software bugs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impomales/Bug_Tracker.git"
+  },
+  "author": "Isaias Pomales",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/impomales/Bug_Tracker/issues"
+  },
+  "homepage": "https://github.com/impomales/Bug_Tracker#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
