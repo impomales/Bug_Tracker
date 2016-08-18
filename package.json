@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/impomales/Bug_Tracker#readme",
   "dependencies": {
+    "babel-preset-react": "^6.11.1",
     "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4"
   }
 }
