@@ -20,6 +20,16 @@ var BugTable = React.createClass({
     displayName: 'BugTable',
 
     render: function () {
+        var list = this.props.bugs.map(function (item) {
+            return React.createElement(BugRow, {
+                key: item.id,
+                id: item.id,
+                status: item.status,
+                priority: item.priority,
+                owner: item.owner,
+                title: item.title
+            });
+        });
         return React.createElement(
             'div',
             { className: 'bugTable' },
@@ -62,20 +72,7 @@ var BugTable = React.createClass({
                 React.createElement(
                     'tbody',
                     null,
-                    React.createElement(BugRow, {
-                        id: '1',
-                        status: 'open',
-                        priority: 'p1',
-                        owner: 'Isaias',
-                        title: 'app crashes on open'
-                    }),
-                    React.createElement(BugRow, {
-                        id: '2',
-                        status: 'closed',
-                        priority: 'p2',
-                        owner: 'Mark',
-                        title: 'infinite loop'
-                    })
+                    list
                 )
             )
         );
@@ -147,7 +144,7 @@ var BugList = React.createClass({
                 'Bug Tracker'
             ),
             React.createElement(BugFilter, null),
-            React.createElement(BugTable, null),
+            React.createElement(BugTable, { bugs: this.props.bugs }),
             React.createElement(BugAdd, null)
         );
     }

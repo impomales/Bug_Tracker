@@ -18,11 +18,12 @@ var BugTable = React.createClass({
         var list = this.props.bugs.map(function(item) {
             return (
                 <BugRow 
-                    key: {item.id}
-                    id: {item.id}
-                    priority: {item.priority}
-                    owner: {item.owner}
-                    title: {item.title}
+                    key={item.id}
+                    id={item.id}
+                    status={item.status}
+                    priority={item.priority}
+                    owner={item.owner}
+                    title={item.title}
                 />
             );
         })
