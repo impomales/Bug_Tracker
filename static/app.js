@@ -1,3 +1,5 @@
+var bugs = [{ id: 1, status: 'open', priority: 'p1', owner: 'Isaias', title: 'App crashes on open' }, { id: 2, status: 'closed', priority: 'p2', owner: 'Mark', title: 'Infinite loop' }];
+
 var BugFilter = React.createClass({
     displayName: 'BugFilter',
 
@@ -151,4 +153,4 @@ var BugList = React.createClass({
     }
 });
 
-ReactDOM.render(React.createElement(BugList, null), document.getElementById('main'));
+ReactDOM.render(React.createElement(BugList, { bugs: bugs }), document.getElementById('main'));

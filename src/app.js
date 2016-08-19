@@ -1,3 +1,8 @@
+var bugs = [
+    {id: 1, status: 'open', priority: 'p1', owner: 'Isaias', title: 'App crashes on open'},
+    {id: 2, status: 'closed', priority: 'p2', owner: 'Mark', title: 'Infinite loop'}
+];
+
 var BugFilter = React.createClass({
     render: function() {
         return (
@@ -10,6 +15,17 @@ var BugFilter = React.createClass({
 
 var BugTable = React.createClass({
     render: function() {
+        var list = this.props.bugs.map(function(item) {
+            return (
+                <BugRow 
+                    key: {item.id}
+                    id: {item.id}
+                    priority: {item.priority}
+                    owner: {item.owner}
+                    title: {item.title}
+                />
+            );
+        })
         return (
             <div className='bugTable'>
                 <table>
@@ -23,20 +39,7 @@ var BugTable = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        <BugRow 
-                            id='1'
-                            status='open'
-                            priority='p1'
-                            owner='Isaias'
-                            title='app crashes on open'
-                        />
-                        <BugRow 
-                            id='2'
-                            status='closed'
-                            priority='p2'
-                            owner='Mark'
-                            title='infinite loop'
-                        />
+                        {list}
                     </tbody>
                 </table>
             </div>
@@ -74,7 +77,7 @@ var BugList = React.createClass({
             <div className='bugList'>
                 <h1>Bug Tracker</h1>
                 <BugFilter />
-                <BugTable />
+                <BugTable bugs={this.props.bugs}/>
                 <BugAdd />
             </div>
         );
@@ -82,6 +85,6 @@ var BugList = React.createClass({
 });
 
 ReactDOM.render(
-    <BugList />, 
+    <BugList bugs={bugs}/>, 
     document.getElementById('main')
 );
