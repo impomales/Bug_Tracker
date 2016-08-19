@@ -23,11 +23,7 @@ var BugTable = React.createClass({
         var list = this.props.bugs.map(function (item) {
             return React.createElement(BugRow, {
                 key: item.id,
-                id: item.id,
-                status: item.status,
-                priority: item.priority,
-                owner: item.owner,
-                title: item.title
+                bug: item
             });
         });
         return React.createElement(
@@ -89,27 +85,27 @@ var BugRow = React.createClass({
             React.createElement(
                 'td',
                 null,
-                this.props.id
+                this.props.bug.id
             ),
             React.createElement(
                 'td',
                 null,
-                this.props.status
+                this.props.bug.status
             ),
             React.createElement(
                 'td',
                 null,
-                this.props.priority
+                this.props.bug.priority
             ),
             React.createElement(
                 'td',
                 null,
-                this.props.owner
+                this.props.bug.owner
             ),
             React.createElement(
                 'td',
                 null,
-                this.props.title
+                this.props.bug.title
             )
         );
     }
@@ -134,6 +130,16 @@ var BugAdd = React.createClass({
 var BugList = React.createClass({
     displayName: 'BugList',
 
+    getInitialState: function () {
+        return { bugs: bugs };
+    },
+    addBug: function () {
+        var id = this.state.bugs.length + 1;
+        var newBug = { id: id, status: 'new', priority: 'p3', owner: 'Danny', title: 'Warning on console' };
+        var bugsMod = this.state.bugs.slice();
+        bugsMod.push(newBug);
+        this.setState({ bugs: bugsMod });
+    },
     render: function () {
         return React.createElement(
             'div',
@@ -144,8 +150,13 @@ var BugList = React.createClass({
                 'Bug Tracker'
             ),
             React.createElement(BugFilter, null),
-            React.createElement(BugTable, { bugs: this.props.bugs }),
-            React.createElement(BugAdd, null)
+            React.createElement(BugTable, { bugs: this.state.bugs }),
+            React.createElement(BugAdd, null),
+            React.createElement(
+                'button',
+                { onClick: this.addBug },
+                'add bug'
+            )
         );
     }
 });

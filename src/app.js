@@ -19,11 +19,7 @@ var BugTable = React.createClass({
             return (
                 <BugRow 
                     key={item.id}
-                    id={item.id}
-                    status={item.status}
-                    priority={item.priority}
-                    owner={item.owner}
-                    title={item.title}
+                    bug={item}
                 />
             );
         })
@@ -52,11 +48,11 @@ var BugRow = React.createClass({
    render: function() {
        return (
            <tr className='bugRow'>
-                <td>{this.props.id}</td>
-                <td>{this.props.status}</td>
-                <td>{this.props.priority}</td>
-                <td>{this.props.owner}</td>
-                <td>{this.props.title}</td>
+                <td>{this.props.bug.id}</td>
+                <td>{this.props.bug.status}</td>
+                <td>{this.props.bug.priority}</td>
+                <td>{this.props.bug.owner}</td>
+                <td>{this.props.bug.title}</td>
            </tr>
         );
    } 
@@ -73,13 +69,24 @@ var BugAdd = React.createClass({
 });
 
 var BugList = React.createClass({
+    getInitialState: function() {
+        return {bugs: bugs};
+    },
+    addBug: function() {
+        var id = this.state.bugs.length + 1;
+        var newBug = {id: id, status: 'new', priority: 'p3', owner: 'Danny', title: 'Warning on console'};
+        var bugsMod = this.state.bugs.slice();
+        bugsMod.push(newBug);
+        this.setState({bugs: bugsMod});
+    },
     render: function() {
         return (
             <div className='bugList'>
                 <h1>Bug Tracker</h1>
                 <BugFilter />
-                <BugTable bugs={this.props.bugs}/>
+                <BugTable bugs={this.state.bugs}/>
                 <BugAdd />
+                <button onClick={this.addBug}>add bug</button>
             </div>
         );
     }
