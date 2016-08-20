@@ -12,13 +12,12 @@ app.use(express.static(path.join(__dirname, 'static')))
 
 app.get('/api/bugs', function(req, res) {
     // status 200: OK
-    res.status(200).send(bugs)
+    res.status(200).json(bugs)
 })
 
 app.post('/api/bugs', function(req, res) {
     console.log(req.body)
     var newBug = req.body
-    newBug.id = bugs.length + 1
     bugs.push(newBug)
     res.json(newBug)
 })

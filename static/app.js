@@ -124,6 +124,7 @@ var BugAdd = React.createClass({
     handleSubmit: function (e) {
         e.preventDefault();
         this.props.addBug(this.state.owner, this.state.title);
+        this.setState({ owner: '', title: '' });
     },
     render: function () {
         return React.createElement(
@@ -169,10 +170,20 @@ var BugList = React.createClass({
     },
     addBug: function (owner, title) {
         var id = this.state.bugs.length + 1;
-        var newBug = { id: id, status: 'new', priority: 'p' + id, owner: owner, title: title };
-        var bugsMod = this.state.bugs.slice();
-        bugsMod.push(newBug);
-        this.setState({ bugs: bugsMod });
+        var newBug = { id: id, status: 'new', priority: 'p1', owner: owner, title: title };
+        $.ajax({
+            url: this.props.source,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(newBug),
+            success: function (data) {
+                var bugsMod = this.state.bugs.concat(data);
+                this.setState({ bugs: bugsMod });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     },
     render: function () {
         return React.createElement(
