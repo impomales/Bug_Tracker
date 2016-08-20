@@ -114,14 +114,39 @@ var BugRow = React.createClass({
 var BugAdd = React.createClass({
     displayName: 'BugAdd',
 
+    getInitialState: function () {
+        return { owner: '', title: '' };
+    },
+    handleOwnerChange: function (e) {
+        this.setState({ owner: e.target.value });
+    },
+    handleTitleChange: function (e) {
+        this.setState({ title: e.target.value });
+    },
+    handleSubmit: function (e) {
+        e.preventDefault();
+        this.props.addBug(this.state.owner, this.state.title);
+    },
     render: function () {
         return React.createElement(
             'div',
             { className: 'bugAdd' },
             React.createElement(
-                'h3',
-                null,
-                'bugAdd'
+                'form',
+                { name: 'bugAddForm' },
+                React.createElement('input', {
+                    type: 'text',
+                    placeholder: 'owner',
+                    value: this.state.owner,
+                    onChange: this.handleOwnerChange
+                }),
+                React.createElement('input', {
+                    type: 'text',
+                    placeholder: 'title',
+                    value: this.state.title,
+                    onChange: this.handleTitleChange
+                }),
+                React.createElement('input', { className: 'button', type: 'button', value: 'Post', onClick: this.handleSubmit })
             )
         );
     }
@@ -133,9 +158,9 @@ var BugList = React.createClass({
     getInitialState: function () {
         return { bugs: bugs };
     },
-    addBug: function () {
+    addBug: function (owner, title) {
         var id = this.state.bugs.length + 1;
-        var newBug = { id: id, status: 'new', priority: 'p3', owner: 'Danny', title: 'Warning on console' };
+        var newBug = { id: id, status: 'new', priority: 'p' + id, owner: owner, title: title };
         var bugsMod = this.state.bugs.slice();
         bugsMod.push(newBug);
         this.setState({ bugs: bugsMod });
@@ -151,12 +176,7 @@ var BugList = React.createClass({
             ),
             React.createElement(BugFilter, null),
             React.createElement(BugTable, { bugs: this.state.bugs }),
-            React.createElement(BugAdd, null),
-            React.createElement(
-                'button',
-                { onClick: this.addBug },
-                'add bug'
-            )
+            React.createElement(BugAdd, { addBug: this.addBug })
         );
     }
 });

@@ -59,10 +59,37 @@ var BugRow = React.createClass({
 });
 
 var BugAdd = React.createClass({
+    getInitialState: function() {
+        return {owner: '', title: ''};  
+    },
+    handleOwnerChange: function(e) {
+        this.setState({owner: e.target.value});
+    },
+    handleTitleChange: function(e) {
+        this.setState({title: e.target.value})
+    },
+    handleSubmit: function(e) {
+        e.preventDefault();
+        this.props.addBug(this.state.owner, this.state.title)
+    },
     render: function() {
         return (
             <div className='bugAdd'>
-                <h3>bugAdd</h3>
+                <form name='bugAddForm'>
+                    <input 
+                        type='text'
+                        placeholder='owner'
+                        value={this.state.owner}
+                        onChange={this.handleOwnerChange}
+                    />
+                    <input 
+                        type='text'
+                        placeholder='title'
+                        value={this.state.title}
+                        onChange={this.handleTitleChange}
+                    />
+                    <input className='button' type='button' value='Post'  onClick={this.handleSubmit}/>
+                </form>
             </div>
         );
     }
@@ -72,9 +99,9 @@ var BugList = React.createClass({
     getInitialState: function() {
         return {bugs: bugs};
     },
-    addBug: function() {
+    addBug: function(owner, title) {
         var id = this.state.bugs.length + 1;
-        var newBug = {id: id, status: 'new', priority: 'p3', owner: 'Danny', title: 'Warning on console'};
+        var newBug = {id: id, status: 'new', priority: 'p' + id, owner: owner, title: title};
         var bugsMod = this.state.bugs.slice();
         bugsMod.push(newBug);
         this.setState({bugs: bugsMod});
@@ -85,8 +112,7 @@ var BugList = React.createClass({
                 <h1>Bug Tracker</h1>
                 <BugFilter />
                 <BugTable bugs={this.state.bugs}/>
-                <BugAdd />
-                <button onClick={this.addBug}>add bug</button>
+                <BugAdd addBug={this.addBug}/>
             </div>
         );
     }

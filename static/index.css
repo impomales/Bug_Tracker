@@ -7,4 +7,10 @@ td, th {
     padding: 10px;
 }
 
+.bugAdd {
+    margin-top: 20px;
+}
 
+.bugAdd .button {
+    margin-left: 20px;
+}
