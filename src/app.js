@@ -1,8 +1,3 @@
-var bugs = [
-    {id: 1, status: 'open', priority: 'p1', owner: 'Isaias', title: 'App crashes on open'},
-    {id: 2, status: 'closed', priority: 'p2', owner: 'Mark', title: 'Infinite loop'}
-];
-
 var BugFilter = React.createClass({
     render: function() {
         return (
@@ -97,7 +92,18 @@ var BugAdd = React.createClass({
 
 var BugList = React.createClass({
     getInitialState: function() {
-        return {bugs: bugs};
+        return {bugs: []};
+    },
+    componentDidMount: function() {
+        $.ajax({
+            url: this.props.source,
+            success: function(data) {
+                this.setState({bugs: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     },
     addBug: function(owner, title) {
         var id = this.state.bugs.length + 1;
@@ -119,6 +125,6 @@ var BugList = React.createClass({
 });
 
 ReactDOM.render(
-    <BugList bugs={bugs}/>, 
+    <BugList source='api/bugs'/>, 
     document.getElementById('main')
 );
