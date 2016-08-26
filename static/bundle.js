@@ -30868,14 +30868,17 @@ var React = require('react');
 var BugFilter = React.createClass({
     displayName: 'BugFilter',
 
+    handleClick: function () {
+        this.props.handleSubmit();
+    },
     render: function () {
         return React.createElement(
             'div',
             { className: 'bugFilter' },
             React.createElement(
-                'h3',
-                null,
-                'bug filter'
+                'button',
+                { onClick: this.handleClick },
+                'Filter'
             )
         );
     }
@@ -30992,8 +30995,20 @@ var BugList = React.createClass({
         return { bugs: [] };
     },
     componentDidMount: function () {
+        this.loadData();
+    },
+    handleSubmit: function () {
+        this.loadData({ priority: 'p1' });
+    },
+    loadData: function (filter) {
+        var url = this.props.source;
+        if (filter) {
+            if (filter.priority) url += '?priority=' + filter.priority;
+            if (filter.priority && filter.status) url += '&status=' + filter.status;
+            if (filter.status && !filter.priority) url += '?status=' + filter.status;
+        }
         $.ajax({
-            url: this.props.source,
+            url: url,
             success: function (data) {
                 this.setState({ bugs: data });
             }.bind(this),
@@ -31028,7 +31043,7 @@ var BugList = React.createClass({
                 null,
                 'Bug Tracker'
             ),
-            React.createElement(BugFilter, null),
+            React.createElement(BugFilter, { handleSubmit: this.handleSubmit }),
             React.createElement(BugTable, { bugs: this.state.bugs }),
             React.createElement(BugAdd, { addBug: this.addBug })
         );

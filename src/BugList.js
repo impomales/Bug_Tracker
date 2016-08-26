@@ -54,8 +54,20 @@ var BugList = React.createClass({
         return {bugs: []};
     },
     componentDidMount: function() {
+        this.loadData();
+    },
+    handleSubmit: function() {
+        this.loadData({priority: 'p1'}) 
+    }, 
+    loadData: function(filter) {
+        var url = this.props.source;
+        if (filter) {
+            if (filter.priority) url += '?priority=' + filter.priority;
+            if (filter.priority && filter.status) url += '&status=' + filter.status;
+            if (filter.status && !filter.priority) url += '?status=' + filter.status;
+        }
         $.ajax({
-            url: this.props.source,
+            url: url,
             success: function(data) {
                 this.setState({bugs: data});
             }.bind(this),
@@ -85,7 +97,7 @@ var BugList = React.createClass({
         return (
             <div className='bugList'>
                 <h1>Bug Tracker</h1>
-                <BugFilter />
+                <BugFilter handleSubmit={this.handleSubmit}/>
                 <BugTable bugs={this.state.bugs}/>
                 <BugAdd addBug={this.addBug}/>
             </div>

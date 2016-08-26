@@ -5,6 +5,6 @@ var db = new Mongo().getDB("bugsdb");
 db.bugs.remove({});
 
 db.bugs.insert([
-  {priority: 'P1', status:'Open', owner:'Ravan', title:'App crashes on open'},
-  {priority: 'P2', status:'New', owner:'Eddie', title:'Misaligned border on panel'}
+  {priority: 'p1', status:'open', owner:'Ravan', title:'App crashes on open'},
+  {priority: 'p2', status:'new', owner:'Eddie', title:'Misaligned border on panel'}
 ]);
