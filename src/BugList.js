@@ -57,25 +57,27 @@ var BugList = React.createClass({
     componentDidMount: function() {
         this.loadData();
     },
+    componentDidUpdate: function(prevProps) {
+        var oldQuery = prevProps.location.query;
+        var newQuery = this.props.location.query;
+        
+        if (oldQuery.priority === newQuery.priority &&
+            oldQuery.status === newQuery.status) return;
+        else this.loadData();
+    },
     handleSubmit: function(filter) {
-        this.loadData(filter);
-    }, 
-    loadData: function(filter) {
-        var url = this.props.source;
-        if (filter) {
-            if (filter.priority) url += '?priority=' + filter.priority;
-            if (filter.priority && filter.status) url += '&status=' + filter.status;
-            if (filter.status && !filter.priority) url += '?status=' + filter.status;
-        }
-        $.ajax({
-            url: url,
-            success: function(data) {
-                this.setState({bugs: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        this.changeFilter(filter)
+    },
+    changeFilter: function(newFilter) {
+        this.props.history.push({search: '?' + $.param(newFilter)});
+    },
+    loadData: function() {
+        var query =  this.props.location.query || {};
+        var filter = {priority: query.priority, status: query.status};
+        
+        $.ajax('/api/bugs', {data: filter}).done(function(data) {
+            this.setState({bugs: data});
+        }.bind(this));
     },
     addBug: function(owner, title) {
         var id = this.state.bugs.length + 1;
@@ -98,7 +100,7 @@ var BugList = React.createClass({
         return (
             <div className='bugList'>
                 <h1>Bug Tracker</h1>
-                <BugFilter handleSubmit={this.handleSubmit}/>
+                <BugFilter handleSubmit={this.handleSubmit} initFilter={this.props.location.query}/>
                 <BugTable bugs={this.state.bugs}/>
                 <BugAdd addBug={this.addBug}/>
             </div>

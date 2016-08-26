@@ -2,7 +2,13 @@ var React = require('react');
 
 var BugFilter = React.createClass({
     getInitialState: function() {
-        return {priority: '', status: ''}
+        var initFilter = this.props.initFilter;
+        return {priority: initFilter.priority, status: initFilter.status}
+    },
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.initFilter.priority === this.state.priority &&
+            newProps.initFilter.status === this.state.status) return;
+        else this.setState({priority: newProps.initFilter.priority, status: newProps.initFilter.status});
     },
     handlePriorityChange: function(e) {
         this.setState({priority: e.target.value})
