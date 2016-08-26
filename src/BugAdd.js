@@ -18,6 +18,7 @@ var BugAdd = React.createClass({
     render: function() {
         return (
             <div className='bugAdd'>
+                <h3>Add a Bug</h3>
                 <form name='bugAddForm'>
                     <input 
                         type='text'

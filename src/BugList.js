@@ -16,6 +16,7 @@ var BugTable = React.createClass({
         });
         return (
             <div className='bugTable'>
+                <h3>Bugs</h3>
                 <table>
                     <thead>
                         <tr>
@@ -56,8 +57,8 @@ var BugList = React.createClass({
     componentDidMount: function() {
         this.loadData();
     },
-    handleSubmit: function() {
-        this.loadData({priority: 'p1'}) 
+    handleSubmit: function(filter) {
+        this.loadData(filter);
     }, 
     loadData: function(filter) {
         var url = this.props.source;

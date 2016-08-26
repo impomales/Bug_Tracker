@@ -30840,6 +30840,11 @@ var BugAdd = React.createClass({
             'div',
             { className: 'bugAdd' },
             React.createElement(
+                'h3',
+                null,
+                'Add a Bug'
+            ),
+            React.createElement(
                 'form',
                 { name: 'bugAddForm' },
                 React.createElement('input', {
@@ -30868,13 +30873,79 @@ var React = require('react');
 var BugFilter = React.createClass({
     displayName: 'BugFilter',
 
+    getInitialState: function () {
+        return { priority: '', status: '' };
+    },
+    handlePriorityChange: function (e) {
+        this.setState({ priority: e.target.value });
+    },
+    handleStatusChange: function (e) {
+        this.setState({ status: e.target.value });
+    },
     handleClick: function () {
-        this.props.handleSubmit();
+        this.props.handleSubmit({ priority: this.state.priority, status: this.state.status });
     },
     render: function () {
         return React.createElement(
             'div',
             { className: 'bugFilter' },
+            React.createElement(
+                'h3',
+                null,
+                'Filter'
+            ),
+            React.createElement(
+                'form',
+                { id: 'bugFilterForm' },
+                React.createElement(
+                    'select',
+                    { name: 'priority', value: this.state.priority, onChange: this.handlePriorityChange },
+                    React.createElement(
+                        'option',
+                        { value: '' },
+                        '(Any)'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'p1' },
+                        'p1'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'p2' },
+                        'p2'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'p3' },
+                        'p3'
+                    )
+                ),
+                React.createElement(
+                    'select',
+                    { name: 'status', value: this.state.status, onChange: this.handleStatusChange },
+                    React.createElement(
+                        'option',
+                        { value: '' },
+                        '(Any)'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'open' },
+                        'open'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'new' },
+                        'new'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'closed' },
+                        'closed'
+                    )
+                )
+            ),
             React.createElement(
                 'button',
                 { onClick: this.handleClick },
@@ -30906,6 +30977,11 @@ var BugTable = React.createClass({
         return React.createElement(
             'div',
             { className: 'bugTable' },
+            React.createElement(
+                'h3',
+                null,
+                'Bugs'
+            ),
             React.createElement(
                 'table',
                 null,
@@ -30997,8 +31073,8 @@ var BugList = React.createClass({
     componentDidMount: function () {
         this.loadData();
     },
-    handleSubmit: function () {
-        this.loadData({ priority: 'p1' });
+    handleSubmit: function (filter) {
+        this.loadData(filter);
     },
     loadData: function (filter) {
         var url = this.props.source;
