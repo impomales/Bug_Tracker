@@ -23,7 +23,7 @@ var BugFilter = React.createClass({
                         <option value='p1'>p1</option>
                         <option value='p2'>p2</option>
                         <option value='p3'>p3</option>
-                    </select>
+                    </select><br/>
                     <select name="status" value={this.state.status} onChange={this.handleStatusChange}>
                         <option value="">(Any)</option>
                         <option value='open'>open</option>

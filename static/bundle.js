@@ -30921,6 +30921,7 @@ var BugFilter = React.createClass({
                         'p3'
                     )
                 ),
+                React.createElement('br', null),
                 React.createElement(
                     'select',
                     { name: 'status', value: this.state.status, onChange: this.handleStatusChange },
