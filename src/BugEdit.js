@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 var $ = require('jquery');
 
 var BugEdit = React.createClass({
@@ -73,6 +74,7 @@ var BugEdit = React.createClass({
                     <br />
                 </form>
                 <button onClick={this.handleSubmit}>Submit</button>
+                <Link to='/bugs'>Back to Bug List</Link>
             </div>
         );
     }

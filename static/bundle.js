@@ -36244,6 +36244,7 @@ module.exports = BugAdd;
 
 },{"react":235}],237:[function(require,module,exports){
 var React = require('react');
+var Link = require('react-router').Link;
 var $ = require('jquery');
 
 var BugEdit = React.createClass({
@@ -36365,6 +36366,11 @@ var BugEdit = React.createClass({
                 'button',
                 { onClick: this.handleSubmit },
                 'Submit'
+            ),
+            React.createElement(
+                Link,
+                { to: '/bugs' },
+                'Back to Bug List'
             )
         );
     }
@@ -36372,7 +36378,7 @@ var BugEdit = React.createClass({
 
 module.exports = BugEdit;
 
-},{"jquery":2,"react":235}],238:[function(require,module,exports){
+},{"jquery":2,"react":235,"react-router":33}],238:[function(require,module,exports){
 var React = require('react');
 
 var BugFilter = React.createClass({
@@ -36474,6 +36480,7 @@ module.exports = BugFilter;
 
 },{"react":235}],239:[function(require,module,exports){
 var React = require('react');
+var Link = require('react-router').Link;
 var $ = require('jquery');
 
 var BugFilter = require('./BugFilter');
@@ -36553,7 +36560,11 @@ var BugRow = React.createClass({
             React.createElement(
                 'td',
                 null,
-                this.props.bug._id
+                React.createElement(
+                    Link,
+                    { to: /bugs/ + this.props.bug._id },
+                    this.props.bug._id
+                )
             ),
             React.createElement(
                 'td',
@@ -36612,7 +36623,7 @@ var BugList = React.createClass({
         var id = this.state.bugs.length + 1;
         var newBug = { id: id, status: 'new', priority: 'p1', owner: owner, title: title };
         $.ajax({
-            url: this.props.source,
+            url: '/api/bugs',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(newBug),
@@ -36643,7 +36654,7 @@ var BugList = React.createClass({
 
 module.exports = BugList;
 
-},{"./BugAdd":236,"./BugFilter":238,"jquery":2,"react":235}],240:[function(require,module,exports){
+},{"./BugAdd":236,"./BugFilter":238,"jquery":2,"react":235,"react-router":33}],240:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
