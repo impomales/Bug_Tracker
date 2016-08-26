@@ -34,6 +34,7 @@ var BugFilter = React.createClass({
                         <option value="">(Any)</option>
                         <option value='open'>open</option>
                         <option value='new'>new</option>
+                        <option value='fixed'>fixed</option>
                         <option value='closed'>closed</option>
                     </select>
                 </form>

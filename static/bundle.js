@@ -36221,7 +36221,7 @@ var BugAdd = React.createClass({
             ),
             React.createElement(
                 'form',
-                { name: 'bugAddForm' },
+                { className: 'bugAddForm' },
                 React.createElement('input', {
                     type: 'text',
                     placeholder: 'owner',
@@ -36243,6 +36243,136 @@ var BugAdd = React.createClass({
 module.exports = BugAdd;
 
 },{"react":235}],237:[function(require,module,exports){
+var React = require('react');
+var $ = require('jquery');
+
+var BugEdit = React.createClass({
+    displayName: 'BugEdit',
+
+    getInitialState: function () {
+        return {};
+    },
+    componentDidMount: function () {
+        this.loadData();
+    },
+    componentDidUpdate: function (prevProps) {
+        if (this.props.params.id != prevProps.params.id) this.loadData();
+    },
+    loadData: function () {
+        $.ajax('/api/bugs/' + this.props.params.id).done(function (bug) {
+            this.setState(bug);
+        }.bind(this));
+    },
+    handlePriorityChange: function (e) {
+        this.setState({ priority: e.target.value });
+    },
+    handleStatusChange: function (e) {
+        this.setState({ status: e.target.value });
+    },
+    handleOwnerChange: function (e) {
+        this.setState({ owner: e.target.value });
+    },
+    handleTitleChange: function (e) {
+        this.setState({ title: e.target.value });
+    },
+    handleSubmit: function (e) {
+        e.preventDefault();
+        var bug = {
+            status: this.state.status,
+            priority: this.state.priority,
+            owner: this.state.owner,
+            title: this.state.title
+        };
+
+        $.ajax({
+            url: '/api/bugs/' + this.props.params.id, type: 'PUT', contentType: 'application/json',
+            data: JSON.stringify(bug),
+            dataType: 'json',
+            success: function (bug) {
+                alert('bug successfully edited');
+                this.setState(bug);
+            }.bind(this)
+        });
+    },
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'bugEdit' },
+            React.createElement(
+                'h2',
+                null,
+                'Edit bug: ',
+                this.props.params.id
+            ),
+            React.createElement(
+                'form',
+                { className: 'bugEditForm', onSubmit: this.handleSubmit },
+                'Priority:',
+                React.createElement(
+                    'select',
+                    { name: 'priority', value: this.state.priority, onChange: this.handlePriorityChange },
+                    React.createElement(
+                        'option',
+                        { value: 'p1' },
+                        'p1'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'p2' },
+                        'p2'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'p3' },
+                        'p3'
+                    )
+                ),
+                React.createElement('br', null),
+                'Status:',
+                React.createElement(
+                    'select',
+                    { name: 'status', value: this.state.status, onChange: this.handleStatusChange },
+                    React.createElement(
+                        'option',
+                        { value: 'open' },
+                        'open'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'closed' },
+                        'closed'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'new' },
+                        'new'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'fixed' },
+                        'fixed'
+                    )
+                ),
+                React.createElement('br', null),
+                'Owner:',
+                React.createElement('input', { type: 'text', value: this.state.owner || '', onChange: this.handleOwnerChange }),
+                React.createElement('br', null),
+                'Title:',
+                React.createElement('input', { type: 'text', value: this.state.title || '', onChange: this.handleTitleChange }),
+                React.createElement('br', null)
+            ),
+            React.createElement(
+                'button',
+                { onClick: this.handleSubmit },
+                'Submit'
+            )
+        );
+    }
+});
+
+module.exports = BugEdit;
+
+},{"jquery":2,"react":235}],238:[function(require,module,exports){
 var React = require('react');
 
 var BugFilter = React.createClass({
@@ -36321,6 +36451,11 @@ var BugFilter = React.createClass({
                     ),
                     React.createElement(
                         'option',
+                        { value: 'fixed' },
+                        'fixed'
+                    ),
+                    React.createElement(
+                        'option',
                         { value: 'closed' },
                         'closed'
                     )
@@ -36337,7 +36472,7 @@ var BugFilter = React.createClass({
 
 module.exports = BugFilter;
 
-},{"react":235}],238:[function(require,module,exports){
+},{"react":235}],239:[function(require,module,exports){
 var React = require('react');
 var $ = require('jquery');
 
@@ -36508,7 +36643,7 @@ var BugList = React.createClass({
 
 module.exports = BugList;
 
-},{"./BugAdd":236,"./BugFilter":237,"jquery":2,"react":235}],239:[function(require,module,exports){
+},{"./BugAdd":236,"./BugFilter":238,"jquery":2,"react":235}],240:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
@@ -36516,6 +36651,7 @@ var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 
 var BugList = require('./BugList');
+var BugEdit = require('./BugEdit');
 
 var NoMatch = React.createClass({
     displayName: 'NoMatch',
@@ -36533,8 +36669,9 @@ ReactDOM.render(React.createElement(
     Router,
     null,
     React.createElement(Route, { path: '/bugs', component: BugList }),
+    React.createElement(Route, { path: '/bugs/:id', component: BugEdit }),
     React.createElement(Redirect, { from: '/', to: '/bugs' }),
     React.createElement(Route, { path: '*', component: NoMatch })
 ), document.getElementById('main'));
 
-},{"./BugList":238,"react":235,"react-dom":3,"react-router":33}]},{},[239]);
+},{"./BugEdit":237,"./BugList":239,"react":235,"react-dom":3,"react-router":33}]},{},[240]);
