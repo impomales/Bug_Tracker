@@ -32,7 +32,7 @@ var BugFilter = React.createClass({
                     <Col xs={12} sm={12} md={6}>
                         <FormGroup>
                             <ControlLabel>Priority</ControlLabel>
-                            <FormControl componentClass='select' onChange={this.handlePriorityChange}>
+                            <FormControl componentClass='select' value={this.state.priority} onChange={this.handlePriorityChange}>
                                 <option value=''>(Any)</option>
                                 <option value='p1'>p1</option>
                                 <option value='p2'>p2</option>
@@ -43,7 +43,7 @@ var BugFilter = React.createClass({
                     <Col xs={12} sm={12} md={6}>
                         <FormGroup>
                             <ControlLabel>Status</ControlLabel>
-                            <FormControl componentClass='select' onChange={this.handleStatusChange}>
+                            <FormControl componentClass='select' value={this.state.status} onChange={this.handleStatusChange}>
                                 <option value=''>(Any)</option>
                                 <option value='new'>new</option>
                                 <option value='open'>open</option>
