@@ -5,7 +5,6 @@ var Button = require('react-bootstrap/lib/Button');
 var FormControl = require('react-bootstrap/lib/FormControl');
 var FormGroup = require('react-bootstrap/lib/FormGroup');
 var ControlLabel = require('react-bootstrap/lib/ControlLabel');
-var InputGroup = require('react-bootstrap/lib/InputGroup');
 
 var BugFilter = React.createClass({
     getInitialState: function() {

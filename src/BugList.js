@@ -1,6 +1,8 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var PageHeader = require('react-bootstrap/lib/PageHeader');
+var Table = require('react-bootstrap/lib/Table');
+var Panel = require('react-bootstrap/lib/Panel');
 var $ = require('jquery');
 
 var BugFilter = require('./BugFilter');
@@ -17,9 +19,8 @@ var BugTable = React.createClass({
             );
         });
         return (
-            <div className='bugTable'>
-                <h3>Bugs</h3>
-                <table>
+            <Panel>
+                <Table striped condensed bordered>
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -32,8 +33,8 @@ var BugTable = React.createClass({
                     <tbody>
                         {list}
                     </tbody>
-                </table>
-            </div>
+                </Table>
+            </Panel>
         );
     }
 });
