@@ -40649,6 +40649,12 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":220}],364:[function(require,module,exports){
 var React = require('react');
+var Panel = require('react-bootstrap/lib/Panel');
+var Col = require('react-bootstrap/lib/Col');
+var Button = require('react-bootstrap/lib/Button');
+var FormControl = require('react-bootstrap/lib/FormControl');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
 
 var BugAdd = React.createClass({
     displayName: 'BugAdd',
@@ -40669,29 +40675,56 @@ var BugAdd = React.createClass({
     },
     render: function () {
         return React.createElement(
-            'div',
-            { className: 'bugAdd' },
-            React.createElement(
-                'h3',
-                null,
-                'Add a Bug'
-            ),
+            Panel,
+            { header: 'Add a Bug' },
             React.createElement(
                 'form',
-                { className: 'bugAddForm' },
-                React.createElement('input', {
-                    type: 'text',
-                    placeholder: 'owner',
-                    value: this.state.owner,
-                    onChange: this.handleOwnerChange
-                }),
-                React.createElement('input', {
-                    type: 'text',
-                    placeholder: 'title',
-                    value: this.state.title,
-                    onChange: this.handleTitleChange
-                }),
-                React.createElement('input', { className: 'button', type: 'button', value: 'Post', onClick: this.handleSubmit })
+                null,
+                React.createElement(
+                    Col,
+                    { xs: 12, sm: 12, md: 6 },
+                    React.createElement(
+                        FormGroup,
+                        null,
+                        React.createElement(
+                            ControlLabel,
+                            null,
+                            'Owner'
+                        ),
+                        React.createElement(FormControl, {
+                            type: 'text',
+                            value: this.state.owner,
+                            onChange: this.handleOwnerChange
+                        })
+                    )
+                ),
+                React.createElement(
+                    Col,
+                    { xs: 12, sm: 12, md: 6 },
+                    React.createElement(
+                        FormGroup,
+                        null,
+                        React.createElement(
+                            ControlLabel,
+                            null,
+                            'Title'
+                        ),
+                        React.createElement(FormControl, {
+                            type: 'text',
+                            value: this.state.title,
+                            onChange: this.handleTitleChange
+                        })
+                    )
+                ),
+                React.createElement(
+                    Col,
+                    { xs: 12, sm: 12, md: 6 },
+                    React.createElement(
+                        Button,
+                        { onClick: this.handleSubmit, bsStyle: 'primary' },
+                        'Add'
+                    )
+                )
             )
         );
     }
@@ -40699,7 +40732,7 @@ var BugAdd = React.createClass({
 
 module.exports = BugAdd;
 
-},{"react":363}],365:[function(require,module,exports){
+},{"react":363,"react-bootstrap/lib/Button":3,"react-bootstrap/lib/Col":4,"react-bootstrap/lib/ControlLabel":6,"react-bootstrap/lib/FormControl":7,"react-bootstrap/lib/FormGroup":10,"react-bootstrap/lib/Panel":16}],365:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 var $ = require('jquery');
@@ -40873,7 +40906,7 @@ var BugFilter = React.createClass({
                 null,
                 React.createElement(
                     Col,
-                    { xs: 12, sm: 6, md: 4 },
+                    { xs: 12, sm: 12, md: 6 },
                     React.createElement(
                         FormGroup,
                         null,
@@ -40910,7 +40943,7 @@ var BugFilter = React.createClass({
                 ),
                 React.createElement(
                     Col,
-                    { xs: 12, sm: 6, md: 4 },
+                    { xs: 12, sm: 12, md: 6 },
                     React.createElement(
                         FormGroup,
                         null,
@@ -40951,12 +40984,16 @@ var BugFilter = React.createClass({
                     )
                 ),
                 React.createElement(
-                    InputGroup,
-                    null,
+                    Col,
+                    { xs: 12, sm: 12, md: 6 },
                     React.createElement(
-                        Button,
-                        { bsStyle: 'primary', onClick: this.handleClick },
-                        'Filter'
+                        FormGroup,
+                        null,
+                        React.createElement(
+                            Button,
+                            { bsStyle: 'primary', onClick: this.handleClick },
+                            'Filter'
+                        )
                     )
                 )
             )
@@ -41132,10 +41169,11 @@ var BugList = React.createClass({
             React.createElement(
                 PageHeader,
                 null,
+                'Bug Tracker ',
                 React.createElement(
-                    'h1',
+                    'small',
                     null,
-                    'Bug Tracker'
+                    'MERN stack tutorial'
                 )
             ),
             React.createElement(BugFilter, { handleSubmit: this.handleSubmit, initFilter: this.props.location.query }),

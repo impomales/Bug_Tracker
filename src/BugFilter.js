@@ -30,7 +30,7 @@ var BugFilter = React.createClass({
         return (
             <Panel collapsible defaultExpanded={true} header="Filter">
                 <form>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={12} md={6}>
                         <FormGroup>
                             <ControlLabel>Priority</ControlLabel>
                             <FormControl componentClass='select' onChange={this.handlePriorityChange}>
@@ -41,7 +41,7 @@ var BugFilter = React.createClass({
                             </FormControl>
                         </FormGroup>
                     </Col>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={12} md={6}>
                         <FormGroup>
                             <ControlLabel>Status</ControlLabel>
                             <FormControl componentClass='select' onChange={this.handleStatusChange}>
@@ -53,9 +53,11 @@ var BugFilter = React.createClass({
                             </FormControl>
                         </FormGroup>
                     </Col>
-                    <InputGroup>
-                        <Button bsStyle='primary' onClick={this.handleClick}>Filter</Button>
-                    </InputGroup>
+                    <Col xs={12} sm={12} md={6}>
+                        <FormGroup>
+                            <Button bsStyle='primary' onClick={this.handleClick}>Filter</Button>
+                        </FormGroup>
+                    </Col>
                 </form>
             </Panel>
         );

@@ -1,4 +1,10 @@
 var React = require('react');
+var Panel = require('react-bootstrap/lib/Panel');
+var Col = require('react-bootstrap/lib/Col');
+var Button = require('react-bootstrap/lib/Button');
+var FormControl = require('react-bootstrap/lib/FormControl');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
 
 var BugAdd = React.createClass({
     getInitialState: function() {
@@ -17,24 +23,33 @@ var BugAdd = React.createClass({
     },
     render: function() {
         return (
-            <div className='bugAdd'>
-                <h3>Add a Bug</h3>
-                <form className='bugAddForm'>
-                    <input 
-                        type='text'
-                        placeholder='owner'
-                        value={this.state.owner}
-                        onChange={this.handleOwnerChange}
-                    />
-                    <input 
-                        type='text'
-                        placeholder='title'
-                        value={this.state.title}
-                        onChange={this.handleTitleChange}
-                    />
-                    <input className='button' type='button' value='Post'  onClick={this.handleSubmit}/>
+            <Panel header="Add a Bug">
+                <form>
+                    <Col xs={12} sm={12} md={6}>
+                        <FormGroup>
+                            <ControlLabel>Owner</ControlLabel>
+                            <FormControl 
+                                type='text'
+                                value={this.state.owner}
+                                onChange={this.handleOwnerChange}
+                            />
+                        </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={12} md={6}>
+                        <FormGroup>
+                            <ControlLabel>Title</ControlLabel>
+                            <FormControl 
+                                type='text'
+                                value={this.state.title}
+                                onChange={this.handleTitleChange}
+                            />
+                        </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={12} md={6}>
+                        <Button onClick={this.handleSubmit} bsStyle='primary'>Add</Button>
+                    </Col>
                 </form>
-            </div>
+            </Panel>
         );
     }
 });
