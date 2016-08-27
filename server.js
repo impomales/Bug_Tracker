@@ -53,7 +53,8 @@ app.put('/api/bugs/:id', function(req, res) {
     })
 })
 
-mongo.connect('mongodb://localhost:27017/bugsdb', function(err, dbConn) {
+// localdb : mongodb://process.env.IP:27017/bugsdb
+mongo.connect('mongodb://imp88:izzi1231@ds017736.mlab.com:17736/bugsdb', function(err, dbConn) {
     if (err) throw err
     db = dbConn
     var server = app.listen(process.env.PORT || 8080, function() {
