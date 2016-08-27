@@ -1,5 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
+var PageHeader = require('react-bootstrap/lib/PageHeader');
 var $ = require('jquery');
 
 var BugFilter = require('./BugFilter');
@@ -102,7 +103,9 @@ var BugList = React.createClass({
     render: function() {
         return (
             <div className='bugList'>
-                <h1>Bug Tracker</h1>
+                <PageHeader>
+                    Bug Tracker <small>MERN stack tutorial</small>
+                </PageHeader>
                 <BugFilter handleSubmit={this.handleSubmit} initFilter={this.props.location.query}/>
                 <BugTable bugs={this.state.bugs}/>
                 <BugAdd addBug={this.addBug}/>

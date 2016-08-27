@@ -1,4 +1,11 @@
 var React = require('react');
+var Panel = require('react-bootstrap/lib/Panel');
+var Col = require('react-bootstrap/lib/Col');
+var Button = require('react-bootstrap/lib/Button');
+var FormControl = require('react-bootstrap/lib/FormControl');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
+var InputGroup = require('react-bootstrap/lib/InputGroup');
 
 var BugFilter = React.createClass({
     getInitialState: function() {
@@ -21,25 +28,36 @@ var BugFilter = React.createClass({
     },
     render: function() {
         return (
-            <div className='bugFilter'>
-                <h3>Filter</h3>
-                <form id="bugFilterForm">
-                    <select name="priority" value={this.state.priority} onChange={this.handlePriorityChange}>
-                        <option value="">(Any)</option>
-                        <option value='p1'>p1</option>
-                        <option value='p2'>p2</option>
-                        <option value='p3'>p3</option>
-                    </select><br/>
-                    <select name="status" value={this.state.status} onChange={this.handleStatusChange}>
-                        <option value="">(Any)</option>
-                        <option value='open'>open</option>
-                        <option value='new'>new</option>
-                        <option value='fixed'>fixed</option>
-                        <option value='closed'>closed</option>
-                    </select>
+            <Panel collapsible defaultExpanded={true} header="Filter">
+                <form>
+                    <Col xs={12} sm={6} md={4}>
+                        <FormGroup>
+                            <ControlLabel>Priority</ControlLabel>
+                            <FormControl componentClass='select' onChange={this.handlePriorityChange}>
+                                <option value=''>(Any)</option>
+                                <option value='p1'>p1</option>
+                                <option value='p2'>p2</option>
+                                <option value='p3'>p3</option>
+                            </FormControl>
+                        </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={4}>
+                        <FormGroup>
+                            <ControlLabel>Status</ControlLabel>
+                            <FormControl componentClass='select' onChange={this.handleStatusChange}>
+                                <option value=''>(Any)</option>
+                                <option value='new'>new</option>
+                                <option value='open'>open</option>
+                                <option value='closed'>closed</option>
+                                <option value='fixed'>fixed</option>
+                            </FormControl>
+                        </FormGroup>
+                    </Col>
+                    <InputGroup>
+                        <Button bsStyle='primary' onClick={this.handleClick}>Filter</Button>
+                    </InputGroup>
                 </form>
-                <button onClick={this.handleClick}>Filter</button>
-            </div>
+            </Panel>
         );
     }
 });
